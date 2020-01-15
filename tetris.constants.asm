@@ -32,37 +32,40 @@ ButtonStart_Mask =  1<<ButtonStart	; $80
 
 
 ; VDP
-VDP_Data_Port =  $C00000
-VDP_Control_Port =  $C00004
-VDP_Counter =  $C00008
+VDP_data_port =  $C00000
+VDP_control_port =  $C00004
+VDP_counter =  $C00008
 
-PSG_Input =  $C00011
+PSG_input =  $C00011
 
 ; Z80
 Z80_RAM =  $A00000	; start of Z80 RAM
-Z80_RAM_End =  $A02000	; end of non-reserved Z80 RAM
-Z80_Bus_Request =  $A11100
-Z80_Reset =  $A11200
+Z80_RAM_end =  $A02000	; end of non-reserved Z80 RAM
+Z80_bus_request =  $A11100
+Z80_reset =  $A11200
 
-Security_Addr =  $A14000 
+Security_addr =  $A14000 
 
 ; I/O area
-HW_Version =  $A10001
-HW_Port_1_Data =  $A10003
-HW_Port_2_Data =  $A10005
-HW_Expansion_Data =  $A10007
-HW_Port_1_Control =  $A10009
-HW_Port_2_Control =  $A1000B
-HW_Expansion_Control =  $A1000D
+HW_version =  $A10001
+HW_port_1_data =  $A10003
+HW_port_2_data =  $A10005
+HW_expansion_data =  $A10007
+HW_port_1_control =  $A10009
+HW_port_2_control =  $A1000B
+HW_expansion_control =  $A1000D
 
 
+; sign-extends a 32-bit integer to 64-bit
+; all RAM addresses are run through this function to allow them to work in both 16-bit and 32-bit addressing modes
+ramaddr function x,(-(x&$80000000)<<1)|x
 
-; RAM
-Ctrl_1 = $FFFFF602
-Ctrl_1_Held = $FFFFF602
-Ctrl_1_Pressed = $FFFFF603
-Ctrl_2 = $FFFFF604
-Ctrl_2_Held = $FFFFF604
-Ctrl_2_Pressed = $FFFFF605
+; RAM addresses
+Ctrl_1 = ramaddr($FFFFF602)
+Ctrl_1_held = ramaddr($FFFFF602)
+Ctrl_1_pressed = ramaddr($FFFFF603)
+Ctrl_2 = ramaddr($FFFFF604)
+Ctrl_2_held = ramaddr($FFFFF604)
+Ctrl_2_pressed = ramaddr($FFFFF605)
 
-Game_Mode_Index = $FFFFF600
+Game_mode_index = ramaddr($FFFFF600)

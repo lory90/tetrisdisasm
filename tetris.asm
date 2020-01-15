@@ -65,13 +65,13 @@ ErrorTrap:
 
 
 EntryPoint:
-	move.b	HW_Version, d0
+	move.b	HW_version, d0
 	andi.b	#$F, d0
 	beq.s	loc_21C
-	move.l	#"SEGA", Security_Addr
+	move.l	#"SEGA", Security_addr
 loc_21C:
 	nop
-	btst	#6, HW_Expansion_Control
+	btst	#6, HW_expansion_control
 	beq.s	loc_234
 	cmpi.l	#"init", ($FFFFFFFC).w	;Predicted (Code-scan)
 	beq.w	loc_276	;Predicted (Code-scan)
@@ -107,10 +107,10 @@ loc_282:
 	bsr.w	loc_612
 	bsr.w	loc_70A
 	bsr.w	loc_4F0
-	move.b	#0, (Game_Mode_Index).w
+	move.b	#0, (Game_mode_index).w
 
 MainGameLoop:
-	move.b	(Game_Mode_Index).w, d0
+	move.b	(Game_mode_index).w, d0
 	andi.w	#$1C, d0
 	jsr	GameModeJmpTbl(pc,d0.w)
 	bra.s	MainGameLoop
@@ -130,10 +130,10 @@ GameModeJmpTbl:
 
 loc_2C0:
 	bsr.w	loc_612	;Predicted (Code-scan)
-	move.l	#$C0000000, VDP_Control_Port	;Predicted (Code-scan)
+	move.l	#$C0000000, VDP_control_port	;Predicted (Code-scan)
 	moveq	#$3F, d7	;Predicted (Code-scan)
 loc_2D0:
-	move.w	#$E, VDP_Data_Port	;Predicted (Code-scan)
+	move.w	#$E, VDP_data_port	;Predicted (Code-scan)
 	dbf	d7, loc_2D0	;Predicted (Code-scan)
 loc_2DC:
 	bra.s	loc_2DC	;Predicted (Code-scan)
@@ -145,16 +145,16 @@ VInt:
 	movem.l	a6/a5/a4/a3/a2/a1/a0/d7/d6/d5/d4/d3/d2/d1/d0, -(sp)
 	tst.b	($FFFFF62A).w
 	beq.s	loc_364
-	move.w	VDP_Control_Port, d0
-	move.l	#$40000010, VDP_Control_Port
-	move.l	($FFFFF61C).w, VDP_Data_Port
-	move.l	#$7C000002, VDP_Control_Port
+	move.w	VDP_control_port, d0
+	move.l	#$40000010, VDP_control_port
+	move.l	($FFFFF61C).w, VDP_data_port
+	move.l	#$7C000002, VDP_control_port
 	move.l	($FFFFF620).w, d0
 	neg.w	d0
 	swap	d0
 	neg.w	d0
 	swap	d0
-	move.l	d0, VDP_Data_Port
+	move.l	d0, VDP_data_port
 	move.b	($FFFFF62A).w, d0
 	andi.w	#$3C, d0
 	jsr	loc_376-2(pc,d0.w)
@@ -192,7 +192,7 @@ loc_3B8:
 loc_3BE:
 	bsr.w	loc_506
 	bsr.w	loc_412
-	lea	(VDP_Control_Port).l, a6
+	lea	(VDP_control_port).l, a6
 	move.w	#$9340, (a6)
 	move.w	#$9400, (a6)
 	move.w	#$9580, (a6)
@@ -200,7 +200,7 @@ loc_3BE:
 	move.w	#$977F, (a6)
 	move.w	#$C000, (a6)
 	move.w	#$80, (a6)
-	lea	(VDP_Control_Port).l, a6
+	lea	(VDP_control_port).l, a6
 	move.w	#$9340, (a6)
 	move.w	#$9401, (a6)
 	move.w	#$9500, (a6)
@@ -288,15 +288,15 @@ HInt:
 	rte	;Predicted (Offset array entry)
 loc_4F0:
 	moveq	#$40, d0
-	move.b	d0, HW_Port_1_Control
-	move.b	d0, HW_Port_2_Control
-	move.b	d0, HW_Expansion_Control
+	move.b	d0, HW_port_1_control
+	move.b	d0, HW_port_2_control
+	move.b	d0, HW_expansion_control
 	rts
 
 
 loc_506:
 	lea	(Ctrl_1).w, a0
-	lea	(HW_Port_1_Data).l, a1
+	lea	(HW_port_1_data).l, a1
 	lea	($FFFFF772).w, a2
 	lea	(loc_602).l, a4
 	lea	($FFFFFF16).w, a5
@@ -392,8 +392,8 @@ loc_5FA:
 loc_602:
 	dc.b	$00, $02, $01, $03, $08, $0A, $09, $0B, $04, $06, $05, $07, $0C, $0E, $0D, $0F ;0x0 (0x00000602-0x00000612, Entry count: 0x10) [Unknown data]
 loc_612:
-	lea	(VDP_Control_Port).l, a0
-	lea	(VDP_Data_Port).l, a1
+	lea	(VDP_control_port).l, a0
+	lea	(VDP_data_port).l, a1
 	lea	(loc_690).l, a2
 	moveq	#$13, d7
 loc_626:
@@ -402,21 +402,21 @@ loc_626:
 	move.w	(loc_692).l, d0
 	move.w	d0, ($FFFFF610).w
 	moveq	#0, d0
-	move.l	#$C0000000, VDP_Control_Port
+	move.l	#$C0000000, VDP_control_port
 	move.w	#$3F, d7
 loc_646:
 	move.w	d0, (a1)
 	dbf	d7, loc_646
 	move.l	#0, ($FFFFF61C).w
 	move.l	#0, ($FFFFF620).w
-	lea	(VDP_Control_Port).l, a6
+	lea	(VDP_control_port).l, a6
 	move.w	#$8F01, (a6)
 	move.w	#$93FF, (a6)
 	move.w	#$94FF, (a6)
 	move.w	#$9780, (a6)
 	move.w	#$4000, (a6)
 	move.w	#$80, (a6)
-	move.w	#0, VDP_Data_Port
+	move.w	#0, VDP_data_port
 loc_682:
 	move.w	(a6), d7
 	andi.w	#2, d7
@@ -430,14 +430,14 @@ loc_692:
 	dc.b	$8B, $00, $8C, $81, $8D, $2F, $8E, $00, $8F, $02, $90, $11 ;0x0 (0x00000692-0x000006B6, Entry count: 0x24) [Unknown data]
 	dc.b	$91, $00, $92, $00 ;0x20
 loc_6B6:
-	lea	(VDP_Control_Port).l, a6
+	lea	(VDP_control_port).l, a6
 	move.w	#$8F01, (a6)
 	move.w	#$93FF, (a6)
 	move.w	#$9447, (a6)
 	move.w	#$9780, (a6)
 	move.w	#$7800, (a6)
 	move.w	#$82, (a6)
-	move.w	#0, VDP_Data_Port
+	move.w	#0, VDP_data_port
 loc_6DC:
 	move.w	(a6), d7
 	andi.w	#2, d7
@@ -454,8 +454,8 @@ loc_702:
 	rts
 loc_70A:
 	nop
-	move.w	#$100, Z80_Bus_Request
-	move.w	#$100, Z80_Reset
+	move.w	#$100, Z80_bus_request
+	move.w	#$100, Z80_reset
 	lea	(loc_3D258).l, a0
 	lea	(Z80_RAM).l, a1
 	move.w	#$1B61, d0
@@ -467,13 +467,13 @@ loc_72E:
 	bne.s	loc_72E
 	addq.w	#1, a1
 	dbf	d0, loc_72C
-	move.w	#0, Z80_Reset
+	move.w	#0, Z80_reset
 	nop
 	nop
 	nop
 	nop
-	move.w	#$100, Z80_Reset
-	move.w	#0, Z80_Bus_Request
+	move.w	#$100, Z80_reset
+	move.w	#0, Z80_bus_request
 	rts
 loc_75C:
 	movem.l	a0, -(sp)
@@ -495,12 +495,12 @@ loc_788:
 	cmpi.b	#$90, d0
 	bcs.s	loc_7B4
 loc_798:
-	move.w	#$100, Z80_Bus_Request
+	move.w	#$100, Z80_bus_request
 loc_7A0:
-	btst	#0, Z80_Bus_Request
+	btst	#0, Z80_bus_request
 	bne.s	loc_7A0
 	move.b	d0, (a0)
-	move.w	#0, Z80_Bus_Request
+	move.w	#0, Z80_bus_request
 loc_7B4:
 	movem.l	(sp)+, a0
 	rts
@@ -542,8 +542,8 @@ loc_804:
 	move.w	#$FFFF, ($FFFFF300).w
 	rts
 loc_80C:
-	lea	(VDP_Control_Port).l, a2
-	lea	(VDP_Data_Port).l, a3
+	lea	(VDP_control_port).l, a2
+	lea	(VDP_data_port).l, a3
 	move.l	#$800000, d7
 loc_81E:
 	move.l	d0, (a2)
@@ -555,8 +555,8 @@ loc_822:
 	dbf	d2, loc_81E
 	rts
 loc_830:
-	lea	(VDP_Control_Port).l, a2
-	lea	(VDP_Data_Port).l, a3
+	lea	(VDP_control_port).l, a2
+	lea	(VDP_data_port).l, a3
 	move.l	#$800000, d7
 loc_842:
 	move.l	d0, (a2)
@@ -610,7 +610,7 @@ loc_8A6:
 	dbf	d7, loc_89E
 loc_8AC:
 	lea	($FFFFF7A0).w, a6
-	lea	(VDP_Data_Port).l, a5
+	lea	(VDP_data_port).l, a5
 	move.l	(a6)+, (a5)
 	move.l	(a6)+, (a5)
 	move.l	(a6)+, (a5)
@@ -726,9 +726,9 @@ GameMode_Sega:
 	move	#$2700, sr
 	move.w	($FFFFF610).w, d0
 	andi.b	#$BF, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	bsr.w	loc_6B6
-	move.l	#$40000000, VDP_Control_Port
+	move.l	#$40000000, VDP_control_port
 	lea	(loc_CCE).l, a0
 	bsr.w	loc_854
 	lea	(loc_11F2).l, a1
@@ -742,7 +742,7 @@ GameMode_Sega:
 	move.w	#$B4, ($FFFFF61A).w
 	move.w	($FFFFF610).w, d0
 	ori.b	#$40, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	move	#$2500, sr
 loc_C90:
 	move.b	#4, ($FFFFF62A).w
@@ -750,7 +750,7 @@ loc_C90:
 	bsr.w	loc_93A
 	tst.w	($FFFFF61A).w
 	beq.w	loc_CAE
-	btst	#7, (Ctrl_1_Pressed).w
+	btst	#7, (Ctrl_1_pressed).w
 	beq.s	loc_C90
 loc_CAE:
 	clr.b	($FFFFFF20).w
@@ -759,7 +759,7 @@ loc_CAE:
 	bne.s	loc_CC6
 	move.b	#$FF, ($FFFFFF20).w	;Predicted (Code-scan)
 loc_CC6:
-	move.b	#4, (Game_Mode_Index).w
+	move.b	#4, (Game_mode_index).w
 	rts
 loc_CCE:
 	dc.b	$01, $00, $FF, $FF, $FF, $FF, $01, $00, $FC, $88, $00, $00, $01, $11, $01, $16, $67, $15, $66, $66
@@ -862,7 +862,7 @@ GameMode_Level:
 	move	#$2700, sr
 	move.w	($FFFFF610).w, d0
 	andi.b	#$BF, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	bsr.w	loc_6B6
 	moveq	#2, d0
 	bsr.w	loc_9C4
@@ -873,7 +873,7 @@ GameMode_Level:
 	move.b	#1, ($FFFFFF1E).w
 	move.w	($FFFFF610).w, d0
 	ori.b	#$40, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	move	#$2500, sr
 loc_12BC:
 	move.b	#$14, ($FFFFF62A).w
@@ -891,22 +891,22 @@ loc_12D6:
 	clr.w	($FFFFF7DA).w
 	clr.b	($FFFFF770).w
 	clr.b	($FFFFFF1E).w
-	move.b	#0, (Game_Mode_Index).w
+	move.b	#0, (Game_mode_index).w
 	rts
 loc_12FE:
-	move.l	#$40000000, VDP_Control_Port
+	move.l	#$40000000, VDP_control_port
 	lea	(loc_3D2C).l, a0
 	bsr.w	loc_854
-	move.l	#$44000000, VDP_Control_Port
+	move.l	#$44000000, VDP_control_port
 	lea	(loc_3ED0).l, a0
 	bsr.w	loc_854
-	move.l	#$4C000000, VDP_Control_Port
+	move.l	#$4C000000, VDP_control_port
 	lea	(loc_447C).l, a0
 	bsr.w	loc_854
-	move.l	#$52000000, VDP_Control_Port
+	move.l	#$52000000, VDP_control_port
 	lea	(loc_4C30).l, a0
 	bsr.w	loc_854
-	move.l	#$6E000000, VDP_Control_Port
+	move.l	#$6E000000, VDP_control_port
 	lea	(loc_580A).l, a0
 	bsr.w	loc_854
 	rts
@@ -1523,8 +1523,8 @@ loc_1CC0:
 	move.b	$1(a1), d0
 	cmpi.b	#5, ($FFFFFF14).w
 	bne.w	loc_1CDA
-	move.b	(Ctrl_1_Pressed).w, d0
-	or.b	(Ctrl_2_Pressed).w, d0
+	move.b	(Ctrl_1_pressed).w, d0
+	or.b	(Ctrl_2_pressed).w, d0
 loc_1CDA:
 	andi.b	#$70, d0
 	beq.s	loc_1D10
@@ -1552,7 +1552,7 @@ loc_1D12:
 	btst	#0, ($FFFFEB90).w
 	beq.w	loc_1DF0
 	move.l	($FFFFEC00).w, d3
-	btst	#7, (Ctrl_1_Pressed).w
+	btst	#7, (Ctrl_1_pressed).w
 	beq.w	loc_1D5A
 	bsr.w	loc_76C
 	moveq	#6, d1
@@ -1571,7 +1571,7 @@ loc_1D5A:
 	lea	(loc_1E2E).l, a0
 	bsr.w	loc_7BA
 	move.w	#$E0, ($FFFFF61C).w
-	move.b	(Ctrl_1_Pressed).w, d0
+	move.b	(Ctrl_1_pressed).w, d0
 	andi.b	#$70, d0
 	beq.w	loc_1E16
 	btst	#1, ($FFFFEB90).w	;Predicted (Code-scan)
@@ -1602,7 +1602,7 @@ loc_1DBE:
 	bsr.w	loc_7BA	;Predicted (Code-scan)
 	bra.w	loc_1E16	;Predicted (Code-scan)
 loc_1DF0:
-	btst	#7, (Ctrl_1_Pressed).w
+	btst	#7, (Ctrl_1_pressed).w
 	beq.w	loc_1E16
 	move.b	($FFFFEA2B).w, d0
 	cmpi.b	#3, ($FFFFFF14).w
@@ -1616,7 +1616,7 @@ loc_1E16:
 	movem.l	(sp)+, d0/d1/d2/d3/a0
 	rts
 loc_1E1C:
-	btst	#7, (Ctrl_1_Pressed).w
+	btst	#7, (Ctrl_1_pressed).w
 	beq.w	loc_1E2C
 	bset	#2, ($FFFFEB04).w
 loc_1E2C:
@@ -3205,8 +3205,8 @@ loc_30D4:
 	rts
 loc_30EA:
 	movem.l	a3/a2/a1/d4/d3/d2/d1/d0, -(sp)
-	lea	(VDP_Control_Port).l, a2
-	lea	(VDP_Data_Port).l, a3
+	lea	(VDP_control_port).l, a2
+	lea	(VDP_data_port).l, a3
 	move.l	d2, (a2)
 	move.w	d0, d4
 	_move.w	0(a1), (a3)
@@ -3248,8 +3248,8 @@ loc_3154:
 	rts
 loc_3168:
 	movem.l	a2/a1/d2, -(sp)
-	lea	(VDP_Control_Port).l, a1
-	lea	(VDP_Data_Port).l, a2
+	lea	(VDP_control_port).l, a1
+	lea	(VDP_data_port).l, a2
 	move.l	d0, (a1)
 loc_317A:
 	clr.l	d2
@@ -3366,7 +3366,7 @@ loc_33CC:
 	move.w	($FFFFEC04).w, d0
 	lea	(loc_10000).l, a0
 	movea.l	(a0,d0.w), a0
-	move.l	#$40000001, VDP_Control_Port
+	move.l	#$40000001, VDP_control_port
 	bsr.w	loc_854
 	rts
 loc_33EA:
@@ -3580,13 +3580,13 @@ loc_3684:
 	move	#$2700, sr
 	move.w	($FFFFF610).w, d0
 	andi.b	#$BF, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	move.w	#$FFFF, ($FFFFF300).w
 	bsr.w	loc_6B6
-	move.l	#$4C000000, VDP_Control_Port
+	move.l	#$4C000000, VDP_control_port
 	lea	(loc_447C).l, a0
 	bsr.w	loc_854
-	move.l	#$60000000, VDP_Control_Port
+	move.l	#$60000000, VDP_control_port
 	lea	(loc_6890).l, a0
 	bsr.w	loc_854
 	lea	(loc_7EDE).l, a1
@@ -3603,7 +3603,7 @@ loc_3684:
 loc_3704:
 	move.w	($FFFFF610).w, d0
 	ori.b	#$40, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	move	#$2500, sr
 	move.b	#$85, d0
 	bsr.w	loc_77C
@@ -3615,9 +3615,9 @@ loc_3704:
 loc_3740:
 	move.b	#8, ($FFFFF62A).w
 	bsr.w	loc_BFC
-	btst	#7, (Ctrl_1_Pressed).w
+	btst	#7, (Ctrl_1_pressed).w
 	bne.w	loc_377C
-	btst	#6, (Ctrl_1_Pressed).w
+	btst	#6, (Ctrl_1_pressed).w
 	bne.w	loc_376A
 	tst.w	($FFFFF61A).w
 	beq.w	loc_37B6
@@ -3625,7 +3625,7 @@ loc_3740:
 loc_376A:
 	move.w	#$A5, d0	;Predicted (Code-scan)
 	bsr.w	loc_77C	;Predicted (Code-scan)
-	move.b	#$14, (Game_Mode_Index).w	;Predicted (Code-scan)
+	move.b	#$14, (Game_mode_index).w	;Predicted (Code-scan)
 	bra.w	loc_37E0	;Predicted (Code-scan)
 loc_377C:
 	move.w	#$94, d0
@@ -3636,15 +3636,15 @@ loc_377C:
 	dc.b	$11, $FC, $00, $01, $F7, $70, $21, $FC, $00, $FF, $10, $00, $F7, $74, $21, $FC, $00, $FF, $40, $00
 	dc.b	$F7, $7A, $21, $FC, $00, $FF, $00, $00, $F7, $80 ;0x0 (0x0000378E-0x000037AC, Entry count: 0x1E) [Unknown data]
 loc_37AC:
-	move.b	#$C, (Game_Mode_Index).w
+	move.b	#$C, (Game_mode_index).w
 	bra.w	loc_37E0
 loc_37B6:
-	move.b	#0, (Game_Mode_Index).w
+	move.b	#0, (Game_mode_index).w
 	move.l	#$C000, ($FFFFF774).w
 	move.l	#$F000, ($FFFFF77A).w
 	move.l	#$B000, ($FFFFF780).w
 	move.b	#3, ($FFFFF770).w
-	move.b	#$10, (Game_Mode_Index).w
+	move.b	#$10, (Game_mode_index).w
 loc_37E0:
 	move.w	#$218, ($FFFFF7C8).w
 	move.w	#$218, ($FFFFF7CE).w
@@ -4271,7 +4271,7 @@ GameMode_Options:
 	move	#$2700, sr
 	move.w	($FFFFF610).w, d0
 	andi.b	#$BF, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	move.w	#$FFFF, ($FFFFF300).w
 	bsr.w	loc_6B6
 	bsr.w	loc_12FE
@@ -4284,7 +4284,7 @@ GameMode_Options:
 	move.w	#$E10, ($FFFFF61A).w
 	move.w	($FFFFF610).w, d0
 	ori.b	#$40, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	move	#$2500, sr
 	tst.b	($FFFFFF14).w
 	bne.w	loc_5C80
@@ -4292,7 +4292,7 @@ GameMode_Options:
 loc_5C80:
 	move.b	#$10, ($FFFFF62A).w
 	bsr.w	loc_BFC
-	btst	#7, (Ctrl_1_Pressed).w
+	btst	#7, (Ctrl_1_pressed).w
 	bne.w	loc_5CB4
 	tst.w	($FFFFF61A).w
 	beq.w	loc_5CAC
@@ -4301,7 +4301,7 @@ loc_5C80:
 	bsr.w	loc_5FB6
 	bra.w	loc_5C80
 loc_5CAC:
-	move.b	#0, (Game_Mode_Index).w	;Predicted (Code-scan)
+	move.b	#0, (Game_mode_index).w	;Predicted (Code-scan)
 	rts	;Predicted (Code-scan)
 loc_5CB4:
 	move.w	#$94, d0
@@ -4309,7 +4309,7 @@ loc_5CB4:
 	move	#$2700, sr
 	move.w	($FFFFF610).w, d0
 	andi.b	#$BF, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	bsr.w	loc_6B6
 	bsr.w	loc_12FE
 	moveq	#3, d0
@@ -4318,14 +4318,14 @@ loc_5CB4:
 	bsr.w	loc_314C
 	move.w	($FFFFF610).w, d0
 	ori.b	#$40, d0
-	move.w	d0, VDP_Control_Port
+	move.w	d0, VDP_control_port
 	bsr.w	loc_5D40
 	move.w	#$E10, ($FFFFF61A).w
 	move	#$2500, sr
 loc_5D02:
 	move.b	#$10, ($FFFFF62A).w
 	bsr.w	loc_BFC
-	btst	#7, (Ctrl_1_Pressed).w
+	btst	#7, (Ctrl_1_pressed).w
 	bne.w	loc_5D2C
 	tst.w	($FFFFF61A).w
 	beq.s	loc_5CAC
@@ -4335,7 +4335,7 @@ loc_5D02:
 	bra.w	loc_5D02
 loc_5D2C:
 	bsr.w	loc_5DC4
-	move.b	#$10, (Game_Mode_Index).w
+	move.b	#$10, (Game_mode_index).w
 	move.w	#$94, d0
 	bsr.w	loc_77C
 	rts
@@ -4512,14 +4512,14 @@ loc_5F48:
 	dc.b	$24, $18, $0C, $0C, $04, $06, $0C, $0C ;0x0 (0x00005F48-0x00005F50, Entry count: 0x8)
 loc_5F50:
 	move.b	($FFFFFF14).w, d0
-	btst	#3, (Ctrl_1_Pressed).w
+	btst	#3, (Ctrl_1_pressed).w
 	beq.s	loc_5F66
 	cmpi.b	#3, d0
 	bcc.s	loc_5FB0
 	addq.b	#2, d0
 	bra.s	loc_5FB0
 loc_5F66:
-	btst	#2, (Ctrl_1_Pressed).w
+	btst	#2, (Ctrl_1_pressed).w
 	beq.s	loc_5F82
 	cmpi.b	#5, d0
 	beq.s	loc_5F7E
@@ -4531,7 +4531,7 @@ loc_5F7E:
 	subq.b	#3, d0	;Predicted (Code-scan)
 	bra.s	loc_5FB0	;Predicted (Code-scan)
 loc_5F82:
-	btst	#0, (Ctrl_1_Pressed).w
+	btst	#0, (Ctrl_1_pressed).w
 	beq.s	loc_5F9A
 	cmpi.b	#1, d0
 	beq.s	loc_5FB0
@@ -4540,7 +4540,7 @@ loc_5F82:
 	subq.b	#1, d0
 	bra.s	loc_5FB0
 loc_5F9A:
-	btst	#1, (Ctrl_1_Pressed).w
+	btst	#1, (Ctrl_1_pressed).w
 	beq.s	loc_5FB0
 	cmpi.b	#2, d0
 	beq.s	loc_5FB0
@@ -4556,13 +4556,13 @@ loc_5FB6:
 	add.b	d0, d0
 	add.b	d0, d0
 	lea	(loc_6486).l, a0
-	move.l	(a0,d0.w), VDP_Control_Port
+	move.l	(a0,d0.w), VDP_control_port
 	move.w	#2, d0
 	btst	#2, ($FFFFFFEF).w
 	beq.s	loc_5FDE
 	move.w	#6, d0
 loc_5FDE:
-	move.w	d0, VDP_Data_Port
+	move.w	d0, VDP_data_port
 	rts
 loc_5FE6:
 	clr.l	d0
@@ -4570,8 +4570,8 @@ loc_5FE6:
 	add.b	d0, d0
 	add.b	d0, d0
 	lea	(loc_6486).l, a0
-	move.l	(a0,d0.w), VDP_Control_Port
-	move.w	#0, VDP_Data_Port
+	move.l	(a0,d0.w), VDP_control_port
+	move.w	#0, VDP_data_port
 	rts
 loc_6008:
 	dc.b	$00, $05, $40, $84, $00, $03 ;0x0 (0x00006008-0x0000600E, Entry count: 0x6) [Unknown data]
@@ -4828,7 +4828,7 @@ loc_649E:
 	move	#$2700, sr	;Predicted (Code-scan)
 	move.w	($FFFFF610).w, d0	;Predicted (Code-scan)
 	andi.b	#$BF, d0	;Predicted (Code-scan)
-	move.w	d0, VDP_Control_Port	;Predicted (Code-scan)
+	move.w	d0, VDP_control_port	;Predicted (Code-scan)
 	bsr.w	loc_6B6	;Predicted (Code-scan)
 	bsr.w	loc_12FE	;Predicted (Code-scan)
 	moveq	#3, d0	;Predicted (Code-scan)
@@ -4837,14 +4837,14 @@ loc_649E:
 	bsr.w	loc_314C	;Predicted (Code-scan)
 	move.w	($FFFFF610).w, d0	;Predicted (Code-scan)
 	ori.b	#$40, d0	;Predicted (Code-scan)
-	move.w	d0, VDP_Control_Port	;Predicted (Code-scan)
+	move.w	d0, VDP_control_port	;Predicted (Code-scan)
 	bsr.w	loc_651C	;Predicted (Code-scan)
 	move.w	#$E10, ($FFFFF61A).w	;Predicted (Code-scan)
 	move	#$2500, sr	;Predicted (Code-scan)
 loc_64E4:
 	move.b	#$10, ($FFFFF62A).w	;Predicted (Code-scan)
 	bsr.w	loc_BFC	;Predicted (Code-scan)
-	btst	#7, (Ctrl_1_Pressed).w	;Predicted (Code-scan)
+	btst	#7, (Ctrl_1_pressed).w	;Predicted (Code-scan)
 	bne.w	loc_6510	;Predicted (Code-scan)
 	tst.w	($FFFFF61A).w	;Predicted (Code-scan)
 	beq.w	loc_6514	;Predicted (Code-scan)
@@ -4855,7 +4855,7 @@ loc_64E4:
 loc_6510:
 	bsr.w	loc_65C6	;Predicted (Code-scan)
 loc_6514:
-	move.b	#0, (Game_Mode_Index).w	;Predicted (Code-scan)
+	move.b	#0, (Game_mode_index).w	;Predicted (Code-scan)
 	rts	;Predicted (Code-scan)
 loc_651C:
 	clr.l	($FFFFEB92).w	;Predicted (Code-scan)
@@ -5029,7 +5029,7 @@ loc_672A:
 	dc.b	$41, $54, $45, $40, $40, $52, $45, $56, $45, $52, $53, $45 ;0x80
 	dc.b	$40, $44, $52, $4F, $50, $24 ;0xA0
 GameMode_GoToSega:
-	move.b	#0, (Game_Mode_Index).w	;Predicted (Code-scan)
+	move.b	#0, (Game_mode_index).w	;Predicted (Code-scan)
 	rts	;Predicted (Code-scan)
 loc_67D8:
 	dc.w	$2020, $2021, $2022, $2023, $2024, $2025, $2026, $2027, $2023, $2024, $2025, $2028, $2029, $202A ;0x0 (0x000067D8-0x000067F4, Entry count: 0x1C)
