@@ -3,6 +3,32 @@
 ; ---------------------------------------------------------------------------	
 
 ; ---------------------------------------------------------------------------
+; Offsets for the pieces
+; ---------------------------------------------------------------------------
+
+; universally followed object conventions:
+render_flags =		  4 ; bitfield
+						; Bit 0 is the horizontal mirror flag. If set, the object will be flipped on its horizontal axis.
+						; Bit 1 is the vertical mirror flag.
+						; Bit 2 is the coordinate system flag. If clear, the object will be positioned by absolute screen coordinates. 
+						;   This is used for things like the HUD and menu options. If set, the object will be positioned by the playfield coordinates, i.e. where it is in a level.
+						; Bits 3 and 4 are either unused, or their purpose is unknown.
+						; Bit 5 is the static mappings flag. If set, this indicates that the mappings pointer for this object points directly to the pieces data for this frame, and implies that the object consists of only one sprite piece.
+						; Bit 6 is the compound sprites flag. If set, this indicates that the current object's status table also contains information about other child sprites which need to be drawn using the current object's mappings:
+						;  - Word $16 of the status table indicates the number of child sprites.
+						;  - Following this word is the actual data for each sprite. The format is six bytes per sprite: the first word is the base X position, the next word is the base Y position, the next byte is ignored and the last byte is the mapping frame to display
+						; Bit 7 is the on-screen flag. It will be set if the object is on-screen, and clear otherwise.
+height_pixels =		  6 ; byte
+width_pixels =		  7 ; byte
+priority =		  8 ; word ; in units of $80
+art_tile =		 $A ; word ; PCCVH AAAAAAAAAAA ; P = priority, CC = palette line, V = y-flip; H = x-flip, A = starting cell index of art
+mappings =		 $C ; long
+x_pos =			$10 ; word, or long when extra precision is required
+y_pos =			$14 ; word, or long when extra precision is required
+mapping_frame =		$22 ; byte
+; ---------------------------------------------------------------------------
+
+; ---------------------------------------------------------------------------
 ; Controller Buttons
 ;
 ; Buttons bit numbers
@@ -61,6 +87,23 @@ HW_expansion_control =  $A1000D
 ramaddr function x,(-(x&$80000000)<<1)|x
 
 ; RAM addresses
+Field_mappings = ramaddr($FFFFE000)	; graphics (plane mapping definitions) for the pieces
+Field_mappings_2 = ramaddr($FFFFE1C0)	; for Player 2
+
+Field_layout = ramaddr($FFFFE380)	; 0 = empty
+									; 1 = yellow
+									; 2 = light blue
+									; 3 = red
+									; 4 = blue
+									; 5 = orange
+									; 6 = green
+									; 7 = purple
+									; $FF = border
+
+Field_layout_2 = ramaddr($FFFFE4C0)	; for Player 2
+
+Piece_control_mem = ramaddr($FFFFEA00)
+
 Ctrl_1 = ramaddr($FFFFF602)
 Ctrl_1_held = ramaddr($FFFFF602)
 Ctrl_1_pressed = ramaddr($FFFFF603)

@@ -1037,7 +1037,7 @@ loc_152E:
 	lea	(loc_1A5C).l, a0
 loc_1578:
 	moveq	#7, d0
-	lea	($FFFFEA00).w, a1
+	lea	(Piece_control_mem).w, a1
 loc_157E:
 	move.l	(a0)+, (a1)+
 	dbf	d0, loc_157E
@@ -1046,7 +1046,7 @@ loc_157E:
 loc_158A:
 	move.l	(a0)+, (a1)+
 	dbf	d0, loc_158A
-	lea	($FFFFEA00).w, a0
+	lea	(Piece_control_mem).w, a0
 	bsr.w	loc_1372
 	move.b	($FFFFFF14).w, d0
 	cmpi.b	#3, d0
@@ -1386,7 +1386,7 @@ loc_1A9C:
 	move.w	#$FFFF, ($FFFFE3A2).w
 loc_1AB4:
 	bsr.w	loc_352C
-	lea	($FFFFEA00).w, a0
+	lea	(Piece_control_mem).w, a0
 	bsr.w	loc_1B12
 	move.b	($FFFFFF14).w, d0
 	move.b	$2B(a0), d1
@@ -1434,7 +1434,7 @@ loc_1B4A:
 	beq.s	loc_1BB0
 	cmpi.b	#5, ($FFFFFF14).w
 	bne.s	loc_1BAC
-	lea	($FFFFEA00).w, a1
+	lea	(Piece_control_mem).w, a1
 	tst.b	$2D(a0)
 	bne.s	loc_1B70
 	lea	($FFFFEA80).w, a1
@@ -1513,7 +1513,7 @@ loc_1C48:
 	beq.s	loc_1C9A
 	bra.s	loc_1CB8
 loc_1C68:
-	lea	($FFFFEA00).w, a1
+	lea	(Piece_control_mem).w, a1
 	tst.b	$2D(a0)
 	bne.s	loc_1C76
 	lea	($FFFFEA80).w, a1
@@ -1554,7 +1554,7 @@ loc_1CDA:
 	beq.s	loc_1D10
 	cmpi.b	#3, ($FFFFFF14).w
 	bne.s	loc_1D0A
-	lea	($FFFFEA00).w, a1	;Predicted (Code-scan)
+	lea	(Piece_control_mem).w, a1	;Predicted (Code-scan)
 	tst.b	$2D(a0)	;Predicted (Code-scan)
 	bne.s	loc_1CF6	;Predicted (Code-scan)
 	lea	($FFFFEA80).w, a1	;Predicted (Code-scan)
@@ -1742,7 +1742,7 @@ loc_1F46:
 loc_1F4C:
 	adda.w	#2, a0
 	dbf	d2, loc_1F46
-	lea	($FFFFEA00).w, a0
+	lea	(Piece_control_mem).w, a0
 	btst	#1, $2B(a0)
 	beq.w	loc_1F66
 	bsr.w	loc_2B8A
@@ -1752,7 +1752,7 @@ loc_1F66:
 	beq.w	loc_1F78
 	bsr.w	loc_2B8A
 loc_1F78:
-	lea	($FFFFE380).w, a0
+	lea	(Field_layout).w, a0
 	lea	($FFFFE1A0).w, a1
 	cmpi.b	#5, ($FFFFFF14).w
 	bne.s	loc_1F8C
@@ -1765,60 +1765,60 @@ loc_1F8C:
 	beq.w	loc_2032
 	cmpi.b	#3, d0
 	bcc.w	loc_1FD2
-	lea	($FFFFE380).w, a0
-	lea	($FFFFE000).w, a1
+	lea	(Field_layout).w, a0
+	lea	(Field_mappings).w, a1
 	lea	($FFFFE1A0).w, a2
-	lea	($FFFFEA00).w, a4
+	lea	(Piece_control_mem).w, a4
 	bsr.w	loc_246A
 	moveq	#9, d1
 	moveq	#$13, d2
 	move.l	#$431E0003, d3
-	lea	($FFFFE000).w, a0
+	lea	(Field_mappings).w, a0
 	bsr.w	loc_7BA
 	bra.w	loc_205C
 loc_1FD2:
-	lea	($FFFFE380).w, a0
-	lea	($FFFFE000).w, a1
+	lea	(Field_layout).w, a0
+	lea	(Field_mappings).w, a1
 	lea	($FFFFE1A0).w, a2
-	lea	($FFFFEA00).w, a4
+	lea	(Piece_control_mem).w, a4
 	bsr.w	loc_246A
 	moveq	#9, d1
 	moveq	#$13, d2
 	move.l	#$43060003, d3
-	lea	($FFFFE000).w, a0
+	lea	(Field_mappings).w, a0
 	bsr.w	loc_7BA
-	lea	($FFFFE4C0).w, a0
+	lea	(Field_layout_2).w, a0
 	lea	($FFFFE360).w, a1
 	bsr.w	loc_2636
 	bsr.w	loc_2076
-	lea	($FFFFE4C0).w, a0
-	lea	($FFFFE1C0).w, a1
+	lea	(Field_layout_2).w, a0
+	lea	(Field_mappings_2).w, a1
 	lea	($FFFFE360).w, a2
 	lea	($FFFFEA80).w, a4
 	bsr.w	loc_246A
 	moveq	#9, d1
 	moveq	#$13, d2
 	move.l	#$43360003, d3
-	lea	($FFFFE1C0).w, a0
+	lea	(Field_mappings_2).w, a0
 	bsr.w	loc_7BA
 	bra.w	loc_205C
 loc_2032:
 	bsr.w	loc_2076
-	lea	($FFFFE380).w, a0
-	lea	($FFFFE000).w, a1
+	lea	(Field_layout).w, a0
+	lea	(Field_mappings).w, a1
 	lea	($FFFFE360).w, a2
-	lea	($FFFFEA00).w, a4
+	lea	(Piece_control_mem).w, a4
 	bsr.w	loc_246A
 	moveq	#$B, d1
 	moveq	#$13, d2
 	move.l	#$431C0003, d3
-	lea	($FFFFE000).w, a0
+	lea	(Field_mappings).w, a0
 	bsr.w	loc_7BA
 loc_205C:
 	movem.l	(sp)+, d0/a0/a1/a2
 	rts
 loc_2062:
-	lea	($FFFFEA00).w, a0
+	lea	(Piece_control_mem).w, a0
 	btst	#1, $2B(a0)
 	beq.w	loc_2074
 	bsr.w	loc_2B16
@@ -2361,7 +2361,7 @@ loc_26AE:
 	dbf	d2, loc_26AE
 	cmpi.b	#5, ($FFFFFF14).w
 	bne.w	loc_26F0
-	lea	($FFFFEA00).w, a0	;Predicted (Code-scan)
+	lea	(Piece_control_mem).w, a0	;Predicted (Code-scan)
 	btst	#1, $2B(a0)	;Predicted (Code-scan)
 	beq.w	loc_26D8	;Predicted (Code-scan)
 	bsr.w	loc_2BC2	;Predicted (Code-scan)
@@ -2473,7 +2473,7 @@ loc_2802:
 	lea	($FFFFEA80).w, a1
 	tst.b	$2D(a0)
 	beq.s	loc_2834
-	lea	($FFFFEA00).w, a1	;Predicted (Code-scan)
+	lea	(Piece_control_mem).w, a1	;Predicted (Code-scan)
 loc_2834:
 	move.w	#0, $3E(a1)
 	move.b	#4, $2B(a1)
@@ -2482,7 +2482,7 @@ loc_2840:
 	rts
 loc_2846:
 	movem.l	a4/a3/a2/a1/a0/d4/d3/d2/d1/d0, -(sp)
-	lea	($FFFFEA00).w, a0
+	lea	(Piece_control_mem).w, a0
 	lea	($FFFFEB9C).w, a1
 	bsr.w	loc_2870
 	cmpi.b	#3, ($FFFFFF14).w
@@ -2642,7 +2642,7 @@ loc_2A3C:
 	lea	($FFFFEA80).w, a1
 	tst.b	$2D(a0)
 	beq.s	loc_2A5C
-	lea	($FFFFEA00).w, a1
+	lea	(Piece_control_mem).w, a1
 loc_2A5C:
 	btst	#1, $2B(a1)
 	beq.s	loc_2A84
@@ -2680,7 +2680,7 @@ loc_2AAA:
 	lea	($FFFFEA80).w, a2
 	tst.b	$2D(a0)
 	beq.s	loc_2AC4
-	lea	($FFFFEA00).w, a2
+	lea	(Piece_control_mem).w, a2
 loc_2AC4:
 	btst	#1, $2B(a2)
 	beq.s	loc_2B02
@@ -3083,7 +3083,7 @@ loc_2F16:
 	lea	($FFFFEA80).w, a1
 	tst.b	$2D(a0)
 	beq.s	loc_2F28
-	lea	($FFFFEA00).w, a1
+	lea	(Piece_control_mem).w, a1
 loc_2F28:
 	add.w	d4, $32(a0)
 	cmpi.b	#$F, $36(a0)
@@ -3438,7 +3438,7 @@ loc_344A:
 	lea	($FFFFEA80).w, a1	;Predicted (Code-scan)
 	tst.b	$2D(a0)	;Predicted (Code-scan)
 	beq.s	loc_3478	;Predicted (Code-scan)
-	lea	($FFFFEA00).w, a1	;Predicted (Code-scan)
+	lea	(Piece_control_mem).w, a1	;Predicted (Code-scan)
 loc_3478:
 	move.b	$2B(a1), d0	;Predicted (Code-scan)
 	andi.b	#$C, d0	;Predicted (Code-scan)
@@ -4413,7 +4413,7 @@ loc_5DB6:
 	dc.b	$0C, $0C, $12, $12, $12 ;0x0 (0x00005DBE-0x00005DC3, Entry count: 0x5) [Unknown data]
 	dc.b	$18
 loc_5DC4:
-	lea	($FFFFEA00).w, a1
+	lea	(Piece_control_mem).w, a1
 	lea	($FFFFEB92).w, a0
 	bsr.w	loc_5DF4
 	cmpi.b	#3, ($FFFFFF14).w
